@@ -13,9 +13,9 @@ def Robot(board):
 # Printing the Board on the Screen
 def printfield(board):
     print("                    ",board[1],"|",board[2],"|",board[3])
-    print("                       -+-+-")
+    print("                     - + - + -")
     print("                    ",board[4],"|",board[5],"|",board[6])
-    print("                       -+-+-")
+    print("                     - + - + -")
     print("                    ",board[7],"|",board[8],"|",board[9])
 
 # Placing a Mark on the Board
@@ -54,14 +54,6 @@ def inputPlayerLetter():
     else:
         return ['O', 'X']
 
-# Letting the Player Enter a Move
-def getPlayerMove(board):
-    # Let the player enter their move.
-    move = ' '
-    while move not in '1 2 3 4 5 6 7 8 9'.split() or not isSpaceFree(board, int(move)):
-        print('What is your next move? (1-9)')
-        move = int(input())
-    return move
 
 # Choosing a Move from a List of Moves
 def chooseRandomMoveFromList(board, movesList):
@@ -105,10 +97,14 @@ while True:
             # Player's turn
             printfield(board)
             
-            move = int(input('What is your next move? (1-9)'))
-            while move not in [1, 2, 3, 4, 5, 6, 7, 8, 9] or not isSpaceFree(board, int(move)):
-                print('please write a number between 1->9')
-                int(input())
+            move = int(input('What is your next move? (1-9) '))
+            while move not in [1, 2, 3, 4, 5, 6, 7, 8, 9]:
+                print('please write a number between 1->9') #there is a bug here
+                move=int(input())
+            while not isSpaceFree(board, move):
+                # there is a bug here
+                print('the move has already been taken, please use an other move')
+                move=int(input())
 
             makeMove(board, playerLetter, move)
             if Iswinner(board, playerLetter):
